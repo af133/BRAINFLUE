@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Content</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #7b2c77, #2c8b74, #ff6f00, #f9d423);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .upper-side, .down-side {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+            position: fixed;
+            width: 100%;
+            left: 0;
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        .upper-side {
+            top: 0;
+        }
+
+        .down-side {
+            bottom: 0;
+            border-top: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .upper-side img, .down-side img {
+            height: 80px; /* Adjust the height as needed */
+            width: 80px; /* Ensure the logo maintains its circular shape */
+            border-radius: 50%; /* Make the logo circular */
+            object-fit: cover; /* Ensure the image covers the circular area */
+        }
+
+        .upper-side .left-side, .upper-side .right-side, .down-side {
+            display: flex;
+            align-items: center;
+        }
+
+        .upper-side .left-side {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .upper-side .right-side {
+            display: flex;
+            justify-content: flex-end;
+            flex: 1;
+        }
+
+        .upper-side a, .down-side a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            margin-left: 15px;
+            transition: color 0.3s;
+        }
+
+        .upper-side a:hover, .down-side a:hover {
+            color: #d4e2f2;
+        }
+
+        .middle-side {
+            padding: 80px 20px 80px;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            flex: 1;
+            overflow-y: auto;
+            box-sizing: border-box;
+            margin-top: 70px; /* Adjust to account for fixed header */
+            margin-bottom: 70px; /* Adjust to account for fixed footer */
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #eaf0f8;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            color: #003d7d;
+        }
+
+        .breadcrumbs a {
+            color: #003d7d;
+            text-decoration: none;
+            margin: 0 8px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .breadcrumbs a:hover {
+            color: #003d7d;
+        }
+
+        .box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .box a {
+            background-color: #0056b3;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .box a:hover {
+            background-color: #003d7d;
+            transform: translateY(-3px);
+        }
+
+        .container1 {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            box-sizing: border-box;
+        }
+
+        .box1 {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+            flex: 1 1 calc(33% - 20px);
+            min-width: 280px;
+            max-width: 350px;
+            max-height: 300px;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+
+        .box1:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .box1 a {
+            display: block;
+            margin-bottom: 15px;
+            color: #0056b3;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .box1 a:hover {
+            color: #003d7d;
+        }
+
+        .video-container {
+            display: none;
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+            border-radius: 15px;
+        }
+
+        .sub-list {
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    <script>
+        let breadcrumbs = [];
+
+        function updateBreadcrumbs() {
+            const breadcrumbContainer = document.getElementById('breadcrumbs');
+            breadcrumbContainer.innerHTML = '';
+            if (breadcrumbs.length > 0) {
+                const lastCrumb = breadcrumbs[breadcrumbs.length - 1];
+                const link = document.createElement('a');
+                link.href = '#';
+                link.textContent = lastCrumb.name;
+                link.onclick = function() {
+                    showList(lastCrumb.id);
+                    return false;
+                };
+                breadcrumbContainer.appendChild(link);
+            }
+        }
+
+        function showList(id) {
+            const allLists = document.querySelectorAll('.sub-list');
+            allLists.forEach(list => list.style.display = 'none');
+            const selectedList = document.getElementById(id);
+            if (selectedList) selectedList.style.display = 'block';
+
+            // Hide video container when switching lists
+            const videoContainer = document.getElementById('video-container');
+            videoContainer.style.display = 'none';
+
+            if (breadcrumbs[breadcrumbs.length - 1]?.id !== id) {
+                breadcrumbs.push({ id: id, name: document.querySelector(`a[onclick="showList('${id}')"]`).textContent });
+            }
+
+            updateBreadcrumbs();
+        }
+
+        function showVideo(url) {
+            const videoContainer = document.getElementById('video-container');
+            const iframe = document.getElementById('video-frame');
+            iframe.src = url;
+            videoContainer.style.display = 'block';
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="upper-side">
+            <div class="left-side">
+                <img src="logo_bimbel.png" alt="logo bimbel">
+                <a href="coomin_soon.html">Beranda</a>
+                <a href="coomin_soon.html">Try Out</a>
+                <a href="coomin_soon.html">Blog</a>
+            </div>
+            <div class="right-side">
+                <img src="logo_bimbel.png" alt="logo bimbel">
+            </div>
+        </div>
+        <div class="middle-side">
+            <div class="breadcrumbs" id="breadcrumbs"></div>
+            <div class="container1">
+                <div class="box">
+                    <a href="#" onclick="showList('kedinasan-list')">Kedinasan</a>
+                    <a href="#" onclick="showList('coding-list')">Coding</a>
+                    <a href="#" onclick="showList('pu-list')">PU</a>
+                    <a href="#" onclick="showList('pbm-list')">PBM</a>
+                    <a href="#" onclick="showList('pk-list')">PK</a>
+                    <a href="#" onclick="showList('ppu-list')">PPU</a>
+                    <a href="#" onclick="showList('litbin-list')">Literasi Bahasa Indonesia</a>
+                    <a href="#" onclick="showList('litbing-list')">Literasi Bahasa Inggris</a>
+                </div>
+                <div id="kedinasan-list" class="box1 sub-list">
+                    <a href="#" onclick="showVideo('https://www.youtube.com/embed/example7')">Kedinasan Video 1</a>
+                    <a href="#" onclick="showVideo('https://www.youtube.com/embed/example8')">Kedinasan Video 2</a>
+                </div>
+                <div id="coding-list" class="box1 sub-list">
+                    <a href="#" onclick="showVideo('https://www.youtube.com/embed/example9')">Coding Video 1</a>
+                    <a href="#" onclick="showVideo('https://www.youtube.com/embed/example10')">Coding Video 2</a>
+                </div>
+                <div id="pu-list" class="box1 sub-list">
+                    <a href="#" onclick="showVideo('https://www.youtube.com/embed/argumen')">Argumen</a>
+                    <a href="#" onclick="showVideo('https://www.youtube.com/embed/implikasi')">Implikasi</a>
+                    <a href="#" onclick="showVideo('https://www.youtube.com/embed/biimplikasi')">Biimplikasi</a>
+                </div>
+                <div id="pbm-list" class="box1 sub-list">
+                    <a href="#" onclick="showVideo('https://www.youtube.com/embed/example11')">PBM Video 1</a>
+                    <a href="#" onclick="showVideo('https://www.youtube.com/embed/example12')">PBM Video 2</a>
+                </div>
+                <div id="pk-list" class="box1 sub-list">
+                    <a href="#" onclick="showVideo('https://www.youtube.com/embed/example13')">PK Video 1</a>
+                    <a href="#" onclick="showVideo('https://www.youtube.com/embed/example14')">PK Video 2</a>
+                </div>
+                <div id="ppu-list" class="box1 sub-list">
+                    <a href="#" onclick="showVideo('https://www.youtube.com/embed/example15')">PPU Video 1</a>
+                    <a href="#" onclick="showVideo('https://www.youtube.com/embed/example16')">PPU Video 2</a>
+                </div>
+                <div id="litbin-list" class="box1 sub-list">
+                    <a href="#" onclick="showVideo('https://www.youtube.com/embed/example17')">Literasi Bahasa Indonesia 1</a>
+                    <a href="#" onclick="showVideo('https://www.youtube.com/embed/example18')">Literasi Bahasa Indonesia 2</a>
+                </div>
+                <div id="litbing-list" class="box1 sub-list">
+                    <a href="#" onclick="showVideo('https://www.youtube.com/embed/example19')">Literasi Bahasa Inggris 1</a>
+                    <a href="#" onclick="showVideo('https://www.youtube.com/embed/example20')">Literasi Bahasa Inggris 2</a>
+                </div>
+            </div> 
+            <div class="video-container" id="video-container">
+                <iframe id="video-frame" src=""></iframe>
+            </div>
+        </div>
+    </div>
+    <div class="down-side">
+        <div>© 2024 Bimbel</div>
+        <div>
+            <a href="coomin_soon.html">Contact Us</a> | 
+            <a href="coomin_soon.html">About Us</a>
+        </div>
+    </div>
+</body>
+</html>
